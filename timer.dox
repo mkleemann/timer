@@ -1,4 +1,72 @@
 /**
  * \page page_timers The Timers
- * Some explanation here!
+ * \section sec_timer_configuration Configuration of Timers
+ * \note The timer module currently only supports ATmega8. If using another
+ *       AVR, you might need to adapt.
+ *
+ * \subsection subsec_timer_prescaler Prescalers
+ * Set TIMER0_PRESCALER, TIMER1_PRESCALER and/or TIMER2_PRESCALER to set
+ * your prescaler according to your wishes. The use of the CSxy bits is
+ * recommended, where x is the timer and y the bit number.
+ *
+ * As example, we are setting the timer #1 to 1/1024 of the clock cycle.
+ *
+ * \code
+ * #define TIMER1_PRESCALER      (1 << CS12) | (1 << CS10)
+ * \endcode
+ *
+ * \subsection subsec_timer_compvalues Compare Values
+ * With ATmega8, timer #0 does not provide a compare functionality. It is
+ * overflow only. The other timers support compare interrupts, so the setting
+ * of TIMER1_COMPARE_VALUE and/or TIMER2_COMPARE_VALUE provides them with an
+ * initial value.
+ *
+ * As example, we are setting timers #1 and #2 to a value not equal to TOP.
+ *
+ * \note timer #1 is 16bit wide and timer #2 8bit wide in their compare
+ *       values.
+ *
+ * \code
+ * #define TIMER1_COMPARE_VALUE  0xE4E1
+ * #define TIMER2_COMPARE_VALUE  99
+ * \endcode
+ *
+ * \section sec_timer_usage Timer Usage
+ *
+ * Example:
+ * \code
+ * #include <avr/interrupt.h>
+ * #include "modules/timer/timer.h"
+ *
+ * int main(void)
+ * {
+ *    // set timer 1 to compare
+ *    initTimer1(TimerCompare);
+ *
+ *    // enable interrupts
+ *    sei();
+ *
+ *    // start timer
+ *    startTimer1();
+ *
+ *    // ...some functionality...
+ *
+ *    // needs restart?!
+ *    restartTimer1();
+ *
+ *    // ...do someting more...
+ *
+ *    // stop timer
+ *    stopTimer1();
+ *
+ *    return 0;
+ * }
+ *
+ * ISR(TIMER1_CAPT_vect)
+ * {
+ *    // do something in interrupt or leave empty
+ *    // if using it to wake the AVR up
+ * }
+ * \endcode
+ *
  */
