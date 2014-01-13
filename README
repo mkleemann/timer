@@ -4,7 +4,7 @@ AVR module: Timer
 A submodule used in other projects. Currently cmake is used to build a library
 of the module. The path structure within the project should be as follows.
 The includes are looked for in the subdirectory "config" and "util" at the same
-level as the adc module.
+level as the module.
 
 Environment:
 ------------
@@ -24,7 +24,7 @@ Environment:
 Use the following git commands to get the submodule:
 
 # to get the submodule
-git submodule add git@github.com:mkleemann/timer.git <path/to/adc/module>
+git submodule add git@github.com:mkleemann/timer.git <path/to/timer/module>
 # commit the submodule to your repository
 git commit
 
