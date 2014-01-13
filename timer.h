@@ -26,7 +26,7 @@
 #ifndef TIMER_H_
 #define TIMER_H_
 
-#include "../config/timer_config.h"
+#include "config/timer_config.h"
 
 // check prescaler settings - if not set, the timer is assumed off
 #ifndef TIMER0_PRESCALER
